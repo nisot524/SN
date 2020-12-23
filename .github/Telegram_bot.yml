@@ -1,0 +1,18 @@
+from telebot import TeleBot
+
+
+bot = TeleBot('1406455043:AAH0jTKRRZs2q2x4-cQhuY2vjn6vS4u2yiE')  # Не забудьте подставить свой токен!
+TO_CHAT_ID = -1001472630579         # Не забудьте подставить нужный id!
+
+@bot.message_handler(commands=['start'])
+def process_start_command(message):
+    bot.send_message(message.chat.id,'Добро Пожаловать! '
+                                     'Отправьте мне поздравление, чтобы оно появилось в онлайн трансляции'
+                     )
+
+@bot.message_handler(content_types=['text'])
+def send_anytext(message):
+    bot.forward_message(TO_CHAT_ID, message.chat.id, message.message_id)
+
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
